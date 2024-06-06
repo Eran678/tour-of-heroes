@@ -1,0 +1,59 @@
+.messages-panel {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 1000px;
+    background-color: gray;
+}
+
+.messages-panel.closed .messages-menu, .messages-panel.closed .messages-list {
+    display: none;
+}
+
+.messages-menu {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    height: 30px;
+}
+
+h3 {
+    line-height: 0px;
+}
+
+.clear-button {
+    background-color: transparent;
+    border: none;
+}
+
+.toggle-button {
+    position: absolute;
+    top:-30px;
+    height: 30px;
+    width: 40px;
+    border-radius: 10px 10px 0 0;
+    border:none;
+    background-color: gray;
+}
+
+.messages-list {
+    overflow-y:scroll;
+    height: 200px;
+    background-color: #424242;
+}
+
+.message {
+    padding: 5px;
+    color: white;
+    border: 2px solid rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+}
+
+.message.even {
+    background-color: #8d8d8d;
+}
+
+.message.odd {
+    background-color: #a0a0a0;
+}

@@ -1,0 +1,126 @@
+/* HeroesComponent's private CSS styles */
+.heroes {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+    width: 15em;
+  }
+  
+  .heroes li {
+    display: flex;
+  }
+  
+  .heroes button {
+    flex: 1;
+    cursor: pointer;
+    position: relative;
+    left: 0;
+    background-color: #EEE;
+    margin: .5em;
+    padding: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: stretch;
+    height: 3em;
+    width: 15em;
+    border: none;
+    justify-content: space-between;
+    box-shadow: 2px 2px 10px 0px rgba(0,0,0,0.25);
+  }
+  
+  .heroes button:hover {
+    color: #2c3a41;
+    background-color: #e6e6e6;
+    left: .1em;
+  }
+  
+  .heroes button:active {
+    background-color: #c0c0c0;
+    color: #181818;
+  }
+  
+  .heroes button.selected {
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .heroes button.selected:hover {
+    background-color: #8f8f8f;
+    color: white;
+  }
+  
+  .heroes button.selected:active {
+    background-color: gray;
+    color: white;
+  }
+  
+  .heroes .badge {
+    display: inline-block;
+    font-size: medium;
+    color: white;
+    padding: .8em .8em 0 .8em;
+    background-color: #405061;
+    line-height: 1em;
+    margin-right: .8em;
+    border-radius: 4px 0 0 4px;
+  }
+
+  /* badge & general image colors */
+  .heroes .gold .badge, ::ng-deep .rank.gold img {
+    background-color: #d6bd2cec;
+  }
+  .heroes .silver .badge, ::ng-deep .rank.silver img {
+    background-color: #a3a3a3;
+  }
+  .heroes .bronze .badge, ::ng-deep .rank.bronze img {
+    background-color: #6e462c;
+  }
+
+  .trophy {
+    height: 2em;
+    transform: translateY(-1000px);
+    align-self: center;
+    margin-right: .25em;
+  }
+
+  /* trophy colors */
+  .heroes .gold .trophy {
+    filter: drop-shadow(0px 1000px 0 #d6bd2cec);
+  }
+  .heroes .silver .trophy {
+    filter: drop-shadow(0px 1000px 0 #a3a3a3);
+  }
+  .heroes .bronze .trophy {
+    filter: drop-shadow(0px 1000px 0 #6e462c);
+  }
+
+  /* general text colors */
+  ::ng-deep .rank.gold span {
+    color: #d6bd2cec;
+  }
+  ::ng-deep .rank.silver span {
+    color: #a3a3a3;
+  }
+  ::ng-deep .rank.bronze span {
+    color: #6e462c;
+  }
+  ::ng-deep .rank.regular span {
+    color: #405061;
+  }
+  ::ng-deep .rank.regular img {
+    background-color: #405061;
+  }
+  
+  .heroes .name {
+    align-self: center;
+    flex-grow: 1; /* Take up remaining space */
+    text-align: left;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 15em);
+    gap: 10px;
+    width: 100%;
+  }

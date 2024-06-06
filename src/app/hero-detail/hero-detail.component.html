@@ -1,0 +1,35 @@
+<div class="bland-popup">
+  <br/>
+  <h2 style="line-height: 0px;text-align: center;">{{hero.name | uppercase}} Details</h2>
+  <hr />
+  <div style="margin: 10px; line-height: 2em;display: flex;justify-content: space-between;">
+    <div style="flex:1;">
+      <span class="bold alignRight">Id: </span><span>{{hero.id}}</span><br/>
+      <span class="bold">Hero Name: </span><span>{{hero.name}}</span><br/>
+      <span class="bold">Abilities:</span>
+      <ul>
+        <li *ngFor="let ability of hero.abilities; let i = index">
+            <span class="name">{{i+1}}. {{ability}}</span>
+        </li>
+      </ul>
+    </div>
+    <div style="position: relative;margin: 25px;" class="rank"
+    [class.gold]="rank == 1"
+    [class.silver]="rank == 2"
+    [class.bronze]="rank == 3"
+    [class.regular]="rank > 3">
+      <img src="assets/rank-icon.png" class="circle" style="height: 100px" />
+      <span class="bold" style="position: absolute;left:50%;font-size:23px;top:23px;transform: translate(-50%);">{{rank}}</span>
+    </div>
+    <div style="margin: 25px;margin-left: 0px;">
+      <button type="button" class="button circle" (click)="rankUp()">+</button><br />
+      <button type="button" class="button circle" (click)="rankDown()">-</button>
+    </div>
+  </div>
+  <div style="display: flex;justify-content: space-between;">
+    <button type="button" class="button" (click)="openEdit()">Edit Hero</button>
+    <button type="button" class="button square" (click)="deleteHero()" title="Delete hero">
+      <img src="assets/trash-icon.png" />
+    </button>
+  </div>
+</div>

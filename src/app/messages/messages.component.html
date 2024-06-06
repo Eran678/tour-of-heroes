@@ -1,0 +1,19 @@
+<div class="messages-panel" [class.closed]="!isOpen">
+
+    <div class="messages-menu">
+        <h3>Messages Log</h3>
+        <button type="button" class="clear-button" (click)="messageService.clear()">
+            <img src="assets/trash-icon.png" style="height: 100%" title="Clear log" />
+        </button>
+    </div>
+    <button type="button" class="toggle-button" (click)="togglePanel()">{{isOpen ? '▼' : '▲'}}</button>
+    <div class="messages-list">
+        <div *ngFor='let message of messageService.messages.reverse(); let i = index' class="message"
+        [class.even]="(messageService.messages.length - i) % 2 == 0"
+        [class.odd]="(messageService.messages.length - i) % 2 == 1"
+        >
+        <span [ngStyle]="{ 'color': MESSAGE_COLORS[message.type] }">{{message.text}}</span>
+        <span>({{(messageService.messages.length - i)}}</span>
+    </div>
+    </div>
+</div>
