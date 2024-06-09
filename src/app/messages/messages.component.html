@@ -12,7 +12,7 @@
         [class.even]="(messageService.messages.length - i) % 2 == 0"
         [class.odd]="(messageService.messages.length - i) % 2 == 1"
         >
-        <span [ngStyle]="{ 'color': MESSAGE_COLORS[message.type] }">{{message.text}}</span>
+        <span [style.color]="MESSAGE_COLORS[message.type]">{{message.text}}</span>
         <span>({{(messageService.messages.length - i)}}</span>
     </div>
     </div>

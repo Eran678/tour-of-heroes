@@ -1,0 +1,58 @@
+.canvas {
+    width: 500px;
+    height: 500px;
+}
+
+.tool-menu {
+    width: 90%;
+    margin: auto;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tool-menu button, .color-menu button {
+    width: 35px;
+    height: 35px;
+    margin: 5px;
+    border: 1px solid #9e9e9e;
+    border-radius: 5px;
+}
+
+.tool-menu button:hover {
+    background-color: #e6e6e6;
+    border-color: #9b9b9b;
+}
+
+.tool-menu button.selected {
+    background-color: #949494;
+    border-color: #6b6b6b;
+}
+
+.tool-menu img {
+    width: 20px;
+    height: 20px;
+}
+
+.tool-menu span {
+    color: lightgray;
+    font-size: 35px;
+    text-align: center;
+    flex: 1;
+}
+
+.tool-menu .color-circle {
+    width: 31px;
+    height: 31px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    margin: 5px;
+}
+
+/* Color menu */
+.color-menu {
+    width: 90%;
+    margin: auto;
+    text-align: left;
+    margin-bottom: 10px;
+}

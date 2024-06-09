@@ -1,24 +1,24 @@
 <div>
     <button type="button" class="popup-bg" (click)="close()"></button>
-    <div class="popup" style="width: 40em; height: 32em;text-align: center;">
+    <div class="popup" style="width: 40em; height: 29em;text-align: center;">
         <button type="button" class="button circle align-right" (click)="close()">x</button>
         <br /><br />
         <h2 style="margin-bottom: 0px;">Add Hero</h2>
         <hr />
         <h3 for="hero-name" style="margin-bottom: 0px;">Name:</h3>
-        <input id="hero-name" [(ngModel)]="heroName" autocomplete="off" placeholder="Name"><br/>
+        <input id="hero-name" [(ngModel)]="heroName" autocomplete="off" placeholder="Name" maxlength="15"><br/>
         <div style="display: flex; align-items: center;justify-content: center;">
             <h3>Abilities:</h3>
             <button type="button" class="button circle" (click)="addAbility()">+</button>
         </div>        
-        <ul style="height: 200px; overflow-y: scroll;"  class="modern-scrollbar">
+        <ul style="height: 150px;"  class="modern-scrollbar">
             <li *ngFor="let ability of heroAbilities; let i = index; trackBy: trackByIndex" style="display: flex; align-items: center; justify-content: center;">
                 <label for="hero-ability-{{i}}" style="margin-right: 10px; width: 30px; text-align: right;">{{i+1}}.</label>
-                <input id="hero-ability-{{i}}" style="margin: 5px; width: 300px;" [(ngModel)]="heroAbilities[i]" autocomplete="off" placeholder="Ability #{{i+1}}">
+                <input id="hero-ability-{{i}}" style="margin: 5px; width: 300px;" [(ngModel)]="heroAbilities[i]" autocomplete="off" placeholder="Ability #{{i+1}}" maxlength="35">
                 <button type="button" class="button circle" (click)="removeAbility(i)">-</button>
             </li>
         </ul>
         <br/>
-        <button type="button" class="button" (click)="addHero(heroName, heroAbilities)">Add Hero!</button>
+        <button type="button" class="button" (click)="addHero(heroName, heroAbilities)">Add Hero</button>
     </div>
 </div>

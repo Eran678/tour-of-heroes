@@ -26,6 +26,13 @@
       <button type="button" class="button circle" (click)="rankDown()">-</button>
     </div>
   </div>
+  <hr />
+  <div style="text-align: center;">
+    <h2 style="line-height: 0px;margin-bottom:0px;">What do they look like?</h2><br/>
+    <img *ngIf="image" src="{{image}}" style="max-height: 30vh;max-width: 50%;"><br/>
+    <h4 *ngIf="!image" style="color: gray;line-height: 0px;margin-top:0px;">(no image currently saved, go to 'Edit Hero' to add one)</h4>
+  </div>
+  <hr />
   <div style="display: flex;justify-content: space-between;">
     <button type="button" class="button" (click)="openEdit()">Edit Hero</button>
     <button type="button" class="button square" (click)="deleteHero()" title="Delete hero">

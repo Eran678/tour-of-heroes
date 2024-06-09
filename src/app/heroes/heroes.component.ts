@@ -12,6 +12,10 @@ import { HeroService } from '../hero.service';
 import { AddHeroPanelComponent } from '../add-hero-panel/add-hero-panel.component';
 import { EditHeroPanelComponent } from '../edit-hero-panel/edit-hero-panel.component';
 import { MessageService } from '../message.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, of, map } from 'rxjs';
+import { MessageType } from '../message';
+import { DrawHeroPanelComponent } from '../draw-hero-panel/draw-hero-panel.component';
 
 @Component({ // this component is responsible for handling the heroes list
   standalone: true,
@@ -25,7 +29,8 @@ import { MessageService } from '../message.service';
     UpperCasePipe,
     HeroDetailComponent,
     AddHeroPanelComponent,
-    EditHeroPanelComponent
+    EditHeroPanelComponent,
+    DrawHeroPanelComponent
   ],
 })
 
@@ -34,10 +39,11 @@ export class HeroesComponent implements OnInit {
   selectedHero?: Hero; // current hero that's viewed in hero detail
   isAddPanelOpen: boolean = false; // whether the 'add hero' panel is open or not
   isEditPanelOpen: boolean = false; // whether the 'edit hero' panel is open or not
+  isDrawPanelOpen: boolean = false; // whether the drawing panel is open or not
 
   MAX_HEROES: number = 30;
 
-  constructor(private heroService: HeroService, private messageService: MessageService) { }
+  constructor(private heroService: HeroService, private messageService: MessageService, private http: HttpClient) { }
   getHeroes(): void { // gets the hero array asynchronously from the service
     this.heroService.getHeroes()
         .subscribe(heroes => this.heroes = heroes);
@@ -83,5 +89,12 @@ export class HeroesComponent implements OnInit {
   onRankDown = () => { // function called when pressing '-' button in 'hero detail' (moves hero down in ranks)
     if (this.selectedHero)
       this.heroService.changeHeroIndex(this.selectedHero.id, 1);
+  }
+
+  onOpenDrawPanel = () => { // function called when pressing 'draw' button in 'edit panel' (opens drawing panel)
+    this.isDrawPanelOpen = true;
+  }
+  onCloseDrawPanel = () => { // function called when pressing 'x' button in drawing panel (closes drawing panel)
+    this.isDrawPanelOpen = false;
   }
 }

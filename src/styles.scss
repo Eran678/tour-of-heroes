@@ -56,6 +56,11 @@ body, span {
     border-radius: .5em;
     font-size: large;
     box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.5);
+    background-color: #EEE;
+}
+
+label.button {
+    padding:.5em;
 }
 
 .button:hover {

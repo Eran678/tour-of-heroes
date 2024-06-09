@@ -2,7 +2,7 @@ import { NgFor } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
-export const MAX_ABILITIES: number = 10;
+export const MAX_ABILITIES: number = 3;
 
 @Component({ // this component is responsible for handling the 'add hero' form
   standalone: true,

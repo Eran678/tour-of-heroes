@@ -1,0 +1,35 @@
+<div>
+    <button type="button" class="popup-bg"></button>
+    <div class="popup" style="text-align: center;">
+        <button type="button" class="button circle align-right" (click)="close()">x</button>
+        <br /><br />
+        <h2 style="margin-bottom: 0px;">Draw {{hero.name | uppercase}}</h2>
+        <hr />
+        <div class="tool-menu">
+            <button type="button" [class.selected]="selectedTool == Tool.Pencil" (click)="selectTool(Tool.Pencil)" title="Pencil">
+                <img src="assets/tool-pencil.png"/>
+            </button>
+            <button type="button" [class.selected]="selectedTool == Tool.Eraser" (click)="selectTool(Tool.Eraser)" title="Eraser">
+                <img src="assets/tool-eraser.png"/>
+            </button>
+            <button type="button" [class.selected]="selectedTool == Tool.Picker" (click)="selectTool(Tool.Picker)" title="Color Picker">
+                <img src="assets/tool-picker.png"/>
+            </button>
+            <div class="color-circle" [style.background-color]="this.getColorString(this.selectedColor)"></div>
+            <span>|</span>
+            <button type="button" (click)="clearDrawing()" title="Clear">
+                <img src="assets/trash-icon.png"/>
+            </button>
+            <span>|</span>
+            <button type="button" style="width: 50px;font-weight: bold;" (click)="saveDrawing()">Save</button>
+        </div>
+        <hr />
+        <canvas id="canvas" class="canvas" width="{{IMAGE_SIZE}}" height="{{IMAGE_SIZE}}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">Your browser does not support the HTML canvas tag.</canvas>
+        <hr />
+        <div class="color-menu">
+            <div *ngFor="let colorRow of colorRows;">
+                <button *ngFor="let color of colorRow;" [style.background-color]="getColorString(color)" (click)="selectColor(color)" ></button>
+            </div>
+        </div>
+    </div>
+</div>
