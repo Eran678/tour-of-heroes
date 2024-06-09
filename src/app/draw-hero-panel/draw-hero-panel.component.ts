@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Hero } from '../hero';
-import { NgFor, UpperCasePipe } from '@angular/common';
+import { NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Color } from '../color';
 import { MessageService } from '../message.service';
 import { MessageType } from '../message';
@@ -10,11 +10,12 @@ import { MessageType } from '../message';
   selector: 'app-draw-hero-panel',
   templateUrl: './draw-hero-panel.component.html',
   styleUrls: ['./draw-hero-panel.component.scss'],
-  imports: [UpperCasePipe, NgFor]
+  imports: [UpperCasePipe, NgFor, NgIf]
 })
 export class DrawHeroPanelComponent implements OnInit {
-  @Input() close!: () => void;
+  //@Input() close!: () => void;
   @Input() hero!: Hero;
+  @Output() close = new EventEmitter();
 
   // drawing variables
   isMouseHeld: boolean = false; // whether the mouse is held down or not
@@ -22,6 +23,7 @@ export class DrawHeroPanelComponent implements OnInit {
   selectedTool: Tool = Tool.Pencil; // tool that's currently used
   Tool = Tool; // declaring the Tool enum inside the class so it can be used on HTML
   lastMousePos?: {x:number, y:number};
+  isSaveDisabled: boolean = true;
 
   IMAGE_SIZE = 500;
   PENCIL_THICKNESS = 6;
@@ -77,6 +79,9 @@ export class DrawHeroPanelComponent implements OnInit {
   onMouseUp(event: MouseEvent) { // function called on end of press
     this.isMouseHeld = false;
     this.lastMousePos = undefined;
+
+    if (this.selectedTool != Tool.Picker)
+      this.isSaveDisabled = false;
   }
 
   onMouseMove(event: MouseEvent) { // function called whenever mouse moves
@@ -157,7 +162,7 @@ export class DrawHeroPanelComponent implements OnInit {
     else
       this.selectedColor = {r:pixel[0], g:pixel[1], b:pixel[2]}; // save rgb to selectedColor
 
-    this.messageService.add(`DrawComponent: Picked color (${pixel.slice(0, 3)}))`);
+    this.messageService.add(`DrawComponent: Picked color (${this.selectedColor.r},${this.selectedColor.g},${this.selectedColor.b})`);
   };
 
   selectTool(tool: Tool) { // function called when pressing any tool button (selects the tool)
@@ -171,9 +176,11 @@ export class DrawHeroPanelComponent implements OnInit {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, this.IMAGE_SIZE, this.IMAGE_SIZE);
     this.messageService.add("DrawingComponent: Cleared drawing");
+    this.isSaveDisabled = false;
   }
 
   saveDrawing() { // function called when pressing 'save' button (saves drawing to hero.image)
+    this.isSaveDisabled = true;
     let canvas = document.getElementById('canvas') as HTMLCanvasElement;
 
     // convert canvas to blob
@@ -217,6 +224,10 @@ export class DrawHeroPanelComponent implements OnInit {
 
   getColorString(color: Color) { // generates string from color so it can be used in html
     return `rgb(${color.r},${color.g},${color.b})`;
+  }
+
+  compareColors(color1: Color, color2: Color) { // compares 2 colors
+    return (color1.r === color2.r && color1.g === color2.g && color1.b === color2.b);
   }
 }
 

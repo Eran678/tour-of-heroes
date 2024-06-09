@@ -70,25 +70,12 @@ export class HeroesComponent implements OnInit {
     this.isEditPanelOpen = false;
   }
 
-  onAddHero = (name: string, abilities: string[]) => { // function called when pressing 'add hero!' button in 'add panel' (adds new hero to the list)
-    this.heroService.addHero(name, abilities);
+  onAddHero = () => { // function called when pressing 'add hero!' button in 'add panel' (adds new hero to the list)
     this.isAddPanelOpen = false;
   }
 
   onDeleteHero = () => { // function called when pressing trash button in 'hero detail' (deletes hero from the list)
-    if (this.selectedHero)
-      this.heroService.deleteHero(this.selectedHero.id)
     this.selectedHero = undefined;
-  }
-
-  onRankUp = () => { // function called when pressing '+' button in 'hero detail' (moves hero up in ranks)
-    if (this.selectedHero)
-      this.heroService.changeHeroIndex(this.selectedHero.id, -1);
-  }
-
-  onRankDown = () => { // function called when pressing '-' button in 'hero detail' (moves hero down in ranks)
-    if (this.selectedHero)
-      this.heroService.changeHeroIndex(this.selectedHero.id, 1);
   }
 
   onOpenDrawPanel = () => { // function called when pressing 'draw' button in 'edit panel' (opens drawing panel)
@@ -96,5 +83,23 @@ export class HeroesComponent implements OnInit {
   }
   onCloseDrawPanel = () => { // function called when pressing 'x' button in drawing panel (closes drawing panel)
     this.isDrawPanelOpen = false;
+  }
+
+  onUploadHeroImage = (file: File) => { // function called when pressing 'upload image' button (saves image in hero as blob)
+    // save image as blob
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file); // read the image file as ArrayBuffer
+    reader.onloadend = () => {
+      const arrayBuffer = reader.result as ArrayBuffer;
+      if (arrayBuffer && this.selectedHero) {
+        const blob = new Blob([arrayBuffer], { type: file.type }); // create a blob
+        this.selectedHero.image = blob;
+        this.selectedHero.isImageDrawn = false;
+        this.messageService.add("EditHeroComponent: Image uploaded successfully");
+      }
+      else {
+        this.messageService.add("EditHeroComponent: Error reading image file", MessageType.Error);
+      }
+    };
   }
 }

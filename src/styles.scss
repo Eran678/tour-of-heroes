@@ -3,6 +3,7 @@ body {
     background-repeat: no-repeat;
     background-position: right 0;
     background-size:100vh;
+    overflow-y: hidden; /* allows messages log to go beneath the screen */
 }
 
 body, span {
@@ -126,4 +127,14 @@ input {
     background-clip: padding-box;
     border-radius: 9999px;
     background-color: #AAAAAA;
+}
+
+/* prevent user select */
+
+button {
+    user-select: none;
+}
+
+span {
+    user-select: none;
 }

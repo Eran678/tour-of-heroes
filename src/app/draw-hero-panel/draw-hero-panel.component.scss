@@ -56,3 +56,11 @@
     text-align: left;
     margin-bottom: 10px;
 }
+
+.color-menu button {
+    vertical-align: top;
+}
+
+.color-menu button.selected {
+    border-width: 5px;
+}

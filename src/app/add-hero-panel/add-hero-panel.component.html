@@ -1,7 +1,7 @@
 <div>
-    <button type="button" class="popup-bg" (click)="close()"></button>
+    <button type="button" class="popup-bg" (click)="this.close.emit()"></button>
     <div class="popup" style="width: 40em; height: 29em;text-align: center;">
-        <button type="button" class="button circle align-right" (click)="close()">x</button>
+        <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
         <br /><br />
         <h2 style="margin-bottom: 0px;">Add Hero</h2>
         <hr />
@@ -19,6 +19,6 @@
             </li>
         </ul>
         <br/>
-        <button type="button" class="button" (click)="addHero(heroName, heroAbilities)">Add Hero</button>
+        <button type="button" class="button" (click)="addHero()">Add Hero</button>
     </div>
 </div>

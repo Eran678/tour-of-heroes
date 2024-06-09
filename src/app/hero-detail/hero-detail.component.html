@@ -34,7 +34,7 @@
   </div>
   <hr />
   <div style="display: flex;justify-content: space-between;">
-    <button type="button" class="button" (click)="openEdit()">Edit Hero</button>
+    <button type="button" class="button" (click)="this.openEdit.emit()">Edit Hero</button>
     <button type="button" class="button square" (click)="deleteHero()" title="Delete hero">
       <img src="assets/trash-icon.png" />
     </button>

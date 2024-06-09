@@ -1,20 +1,20 @@
 <div>
-    <button type="button" class="popup-bg" (click)="close()"></button>
+    <button type="button" class="popup-bg" (click)="this.close.emit"></button>
     <div class="popup" style="width: 40em; height: 34em;text-align: center;">
-        <button type="button" class="button circle align-right" (click)="close()">x</button>
+        <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
         <br /><br />
         <h2 style="margin-bottom: 0px;">Edit Hero</h2>
         <hr />
         <h3 for="hero-name" style="margin-bottom: 0px;">Name:</h3>
         <input id="hero-name" [(ngModel)]="hero.name" autocomplete="off" placeholder="Name" maxlength="15"><br/>
         
-        <hr />
+        <br/>
         <h3 style="line-height: 0px;margin-bottom:0px;">Image:</h3><br/>
-        <button type="button" class="button" (click)="openDraw()">Draw🖌️</button>
+        <button type="button" class="button" (click)="this.draw.emit()">Draw🖌️</button>
         <input id="imageUpload" type="file" accept="image/*" style="display:none" (change)="onUploadImage($event)" />
         <label for="imageUpload" type="button" class="button">Upload Image</label>
-        <hr />
         
+        <br/><br/>
         <div style="display: flex; align-items: center;justify-content: center;">
             <h3>Abilities:</h3>
             <button type="button" class="button circle" (click)="addAbility()">+</button>

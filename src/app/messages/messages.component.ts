@@ -17,7 +17,7 @@ export class MessagesComponent {
     [MessageType.Error] : "#ff0000"
   }
 
-  constructor(public messageService: MessageService) {}
+  constructor(protected messageService: MessageService) {}
 
   togglePanel(): void { // function called when pressing '▼' button (minimizes messages panel)
     this.isOpen = !this.isOpen;

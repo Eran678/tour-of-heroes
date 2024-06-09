@@ -1,7 +1,7 @@
 <div>
     <button type="button" class="popup-bg"></button>
     <div class="popup" style="text-align: center;">
-        <button type="button" class="button circle align-right" (click)="close()">x</button>
+        <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
         <br /><br />
         <h2 style="margin-bottom: 0px;">Draw {{hero.name | uppercase}}</h2>
         <hr />
@@ -21,14 +21,14 @@
                 <img src="assets/trash-icon.png"/>
             </button>
             <span>|</span>
-            <button type="button" style="width: 50px;font-weight: bold;" (click)="saveDrawing()">Save</button>
+            <button type="button" style="width: 50px;font-weight: bold;" [disabled]="isSaveDisabled" (click)="saveDrawing()">Save</button>
         </div>
         <hr />
         <canvas id="canvas" class="canvas" width="{{IMAGE_SIZE}}" height="{{IMAGE_SIZE}}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">Your browser does not support the HTML canvas tag.</canvas>
         <hr />
         <div class="color-menu">
             <div *ngFor="let colorRow of colorRows;">
-                <button *ngFor="let color of colorRow;" [style.background-color]="getColorString(color)" (click)="selectColor(color)" ></button>
+                <button *ngFor="let color of colorRow;" [style.background-color]="getColorString(color)" [class.selected]="compareColors(selectedColor, color)" (click)="selectColor(color)" ></button>
             </div>
         </div>
     </div>

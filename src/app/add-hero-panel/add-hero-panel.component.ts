@@ -1,6 +1,8 @@
 import { NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { Hero } from '../hero';
+import { HeroService } from '../hero.service';
 
 export const MAX_ABILITIES: number = 3;
 
@@ -12,12 +14,14 @@ export const MAX_ABILITIES: number = 3;
   imports: [FormsModule, NgFor]
 })
 export class AddHeroPanelComponent {
-  @Input() close!: () => void; // function called when pressing 'x' button
-  @Input() addHero!: (name: string, abilities: string[]) => void; // function called when pressing 'add hero' button
+  @Output() close = new EventEmitter();
+  @Output() add = new EventEmitter(); // function called when pressing 'add hero' button
 
   // values of hero
   heroName: string = "";
   heroAbilities: string[] = ["", ""];
+
+  constructor(private heroService: HeroService) {}
 
   removeAbility(index: number): void { // removes ability at index from the list ('-' button)
     if (this.heroAbilities.length > 1)
@@ -31,5 +35,10 @@ export class AddHeroPanelComponent {
 
   trackByIndex(index: number, item: any): number { // tracks focused textbox so you don't lose focus when writing
     return index;
+  }
+
+  addHero() {
+    this.heroService.addHero(this.heroName, this.heroAbilities);
+    this.add.emit();
   }
 }

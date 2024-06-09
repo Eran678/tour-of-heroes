@@ -22,9 +22,9 @@
     </ul>
   </div>
   <div style="width: 50%;margin:20px;margin-top: 15px;">
-    <app-hero-detail *ngIf="selectedHero && !isEditPanelOpen && !isDrawPanelOpen" [hero]="selectedHero" [rank]="heroes.indexOf(selectedHero)+1" [openEdit]="onOpenEditPanel" [deleteHero]="onDeleteHero" [rankUp]="onRankUp" [rankDown]="onRankDown"></app-hero-detail>
+    <app-hero-detail *ngIf="selectedHero && !isEditPanelOpen && !isDrawPanelOpen" [hero]="selectedHero" [rank]="heroes.indexOf(selectedHero)+1" (openEdit)="onOpenEditPanel()" (delete)="onDeleteHero()"></app-hero-detail>
   </div>
 </div>
-<app-add-hero-panel *ngIf="isAddPanelOpen" [close]="onCloseAddPanel" [addHero]="onAddHero" />
-<app-edit-hero-panel *ngIf="isEditPanelOpen && !isDrawPanelOpen && selectedHero" [close]="onCloseEditPanel" [hero]="selectedHero" [openDraw]="onOpenDrawPanel" />
-<app-draw-hero-panel *ngIf="isDrawPanelOpen && selectedHero" [close]="onCloseDrawPanel" [hero]="selectedHero" />
+<app-add-hero-panel *ngIf="isAddPanelOpen" (close)="onCloseAddPanel()" (add)="onAddHero()" />
+<app-edit-hero-panel *ngIf="isEditPanelOpen && !isDrawPanelOpen && selectedHero" [hero]="selectedHero" (close)="onCloseEditPanel()" (upload)="onUploadHeroImage($event)" (draw)="onOpenDrawPanel()" />
+<app-draw-hero-panel *ngIf="isDrawPanelOpen && selectedHero" [hero]="selectedHero" (close)="onCloseDrawPanel()" />

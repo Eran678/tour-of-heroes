@@ -4,10 +4,11 @@
     bottom: 0px;
     width: 1000px;
     background-color: gray;
+    transition-duration: 0.1s;
 }
 
-.messages-panel.closed .messages-menu, .messages-panel.closed .messages-list {
-    display: none;
+.messages-panel.closed {
+    bottom: -240px;
 }
 
 .messages-menu {
