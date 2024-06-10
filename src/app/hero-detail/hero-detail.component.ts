@@ -12,36 +12,68 @@ import { HeroService } from '../hero.service';
   imports: [FormsModule, NgIf, NgFor, UpperCasePipe],
 })
 export class HeroDetailComponent implements OnChanges {
-  @Input() hero!: Hero; // hero that's being viewed
-  @Input() rank!: number; // rank of the hero in the list
+  @Input() heroId!: number; // hero that's being viewed
   @Output() openEdit = new EventEmitter;
   @Output() delete = new EventEmitter;
+  @Output() rankUp = new EventEmitter;
+  @Output() rankDown = new EventEmitter;
   
+  heroName?: string;
+  heroAbilities?: string[];
+  rank?: number;
   image?: string;
 
   constructor(private heroService: HeroService) {}
 
-  ngOnChanges(changes: SimpleChanges): void { // whenever the hero detail needs to render a hero it regenerates the image
+  ngOnChanges(changes: SimpleChanges): void { // whenever the hero detail needs to render a hero it regenerates the image & rank
+    this.getName();
+    this.getAbilities();
+    this.getRank();
     this.getImage();
   }
 
+  getName() {
+    this.heroService.getName(this.heroId).subscribe(name => {
+      this.heroName = name ?? "";
+    });
+  }
+
+  getAbilities() {
+    this.heroService.getAbilities(this.heroId).subscribe(abilities => {
+      this.heroAbilities = abilities ?? [];
+    });
+  }
+
+  getRank() {
+    this.heroService.findHeroIndex(this.heroId).subscribe(index => {
+      if (index != undefined)
+        this.rank = index + 1;
+      else
+        this.rank = undefined;
+    });
+  }
+
   getImage() { // returns url for the blob that's representing hero image
-    if (this.hero && this.hero.image)
-      this.image = URL.createObjectURL(this.hero.image);
-    else
-      this.image = undefined;
+    this.heroService.getImage(this.heroId).subscribe(image => {
+      if (image)
+        this.image = URL.createObjectURL(image.imageBlob);
+      else
+        this.image = undefined;
+    });
   }
 
   deleteHero() {
-    this.heroService.deleteHero(this.hero.id)
+    this.heroService.deleteHero(this.heroId)
     this.delete.emit();
   }
 
-  rankUp = () => {
-    this.heroService.changeHeroIndex(this.hero.id, -1);
+  onRankUp = () => {
+    this.heroService.changeHeroIndex(this.heroId, -1);
+    this.rankUp.emit();
   }
 
-  rankDown = () => {
-    this.heroService.changeHeroIndex(this.hero.id, 1);
+  onRankDown = () => {
+    this.heroService.changeHeroIndex(this.heroId, 1);
+    this.rankDown.emit();
   }
 }

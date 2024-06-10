@@ -1,19 +1,19 @@
 <div class="bland-popup">
   <br/>
-  <h2 style="line-height: 0px;text-align: center;">{{hero.name | uppercase}} Details</h2>
+  <h2 style="line-height: 0px;text-align: center;">{{heroName | uppercase}} Details</h2>
   <hr />
   <div style="margin: 10px; line-height: 2em;display: flex;justify-content: space-between;">
     <div style="flex:1;">
-      <span class="bold alignRight">Id: </span><span>{{hero.id}}</span><br/>
-      <span class="bold">Hero Name: </span><span>{{hero.name}}</span><br/>
+      <span class="bold alignRight">Id: </span><span>{{heroId}}</span><br/>
+      <span class="bold">Hero Name: </span><span>{{heroName}}</span><br/>
       <span class="bold">Abilities:</span>
       <ul>
-        <li *ngFor="let ability of hero.abilities; let i = index">
+        <li *ngFor="let ability of heroAbilities; let i = index">
             <span class="name">{{i+1}}. {{ability}}</span>
         </li>
       </ul>
     </div>
-    <div style="position: relative;margin: 25px;" class="rank"
+    <div *ngIf="rank" style="position: relative;margin: 25px;" class="rank"
     [class.gold]="rank == 1"
     [class.silver]="rank == 2"
     [class.bronze]="rank == 3"
@@ -22,8 +22,8 @@
       <span class="bold" style="position: absolute;left:50%;font-size:23px;top:23px;transform: translate(-50%);">{{rank}}</span>
     </div>
     <div style="margin: 25px;margin-left: 0px;">
-      <button type="button" class="button circle" (click)="rankUp()">+</button><br />
-      <button type="button" class="button circle" (click)="rankDown()">-</button>
+      <button type="button" class="button circle" (click)="onRankUp()">+</button><br />
+      <button type="button" class="button circle" (click)="onRankDown()">-</button>
     </div>
   </div>
   <hr />

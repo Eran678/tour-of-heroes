@@ -1,16 +1,16 @@
 <div>
-    <button type="button" class="popup-bg" (click)="this.close.emit"></button>
+    <button type="button" class="popup-bg" (click)="onClose()"></button>
     <div class="popup" style="width: 40em; height: 34em;text-align: center;">
-        <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
+        <button type="button" class="button circle align-right" (click)="onClose()">x</button>
         <br /><br />
         <h2 style="margin-bottom: 0px;">Edit Hero</h2>
         <hr />
         <h3 for="hero-name" style="margin-bottom: 0px;">Name:</h3>
-        <input id="hero-name" [(ngModel)]="hero.name" autocomplete="off" placeholder="Name" maxlength="15"><br/>
+        <input id="hero-name" [(ngModel)]="heroName" autocomplete="off" placeholder="Name" maxlength="15"><br/>
         
         <br/>
         <h3 style="line-height: 0px;margin-bottom:0px;">Image:</h3><br/>
-        <button type="button" class="button" (click)="this.draw.emit()">Draw🖌️</button>
+        <button type="button" class="button" (click)="onOpenDraw()">Draw🖌️</button>
         <input id="imageUpload" type="file" accept="image/*" style="display:none" (change)="onUploadImage($event)" />
         <label for="imageUpload" type="button" class="button">Upload Image</label>
         
@@ -20,9 +20,9 @@
             <button type="button" class="button circle" (click)="addAbility()">+</button>
         </div>
         <ul style="height: 150px;" class="modern-scrollbar">
-            <li *ngFor="let ability of hero.abilities; let i = index; trackBy: trackByIndex" style="display: flex; align-items: center; justify-content: center;">
+            <li *ngFor="let ability of heroAbilities; let i = index; trackBy: trackByIndex" style="display: flex; align-items: center; justify-content: center;">
                 <label for="hero-ability-{{i}}" style="margin-right: 10px; width: 30px; text-align: right;">{{i+1}}.</label>
-                <input id="hero-ability-{{i}}" style="margin: 5px; width: 300px;" [(ngModel)]="hero.abilities[i]" autocomplete="off" placeholder="Ability #{{i+1}}" maxlength="35">
+                <input id="hero-ability-{{i}}" style="margin: 5px; width: 300px;" [(ngModel)]="heroAbilities[i]" autocomplete="off" placeholder="Ability #{{i+1}}" maxlength="35">
                 <button type="button" class="button circle" (click)="removeAbility(i)">-</button>
             </li>
         </ul>

@@ -8,7 +8,7 @@ export class MessageService {
   messages: Message[] = []; // array of the messages in the log
 
   add(message: string, type?: MessageType) { // adds new message to the log
-    this.messages.push({text:message, type: type || MessageType.Output});
+    this.messages.push({text:message, type: type ?? MessageType.Output});
   }
 
   clear() { // clears the log

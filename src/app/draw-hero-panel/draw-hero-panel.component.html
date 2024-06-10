@@ -3,7 +3,7 @@
     <div class="popup" style="text-align: center;">
         <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
         <br /><br />
-        <h2 style="margin-bottom: 0px;">Draw {{hero.name | uppercase}}</h2>
+        <h2 style="margin-bottom: 0px;">Draw {{heroName | uppercase}}</h2>
         <hr />
         <div class="tool-menu">
             <button type="button" [class.selected]="selectedTool == Tool.Pencil" (click)="selectTool(Tool.Pencil)" title="Pencil">

@@ -2,8 +2,8 @@
 <div style="display: flex;">
   <div style="width: 50%;margin: 10px;">
     <ul class="heroes grid">
-      <li *ngFor="let hero of heroes; let i = index">
-        <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)"
+      <li *ngFor="let hero of heroNames; let i = index">
+        <button [class.selected]="hero.id === selectedHeroId" type="button" (click)="onSelect(hero.id)"
           [class.gold]="i == 0"
           [class.silver]="i == 1"
           [class.bronze]="i == 2"
@@ -13,7 +13,7 @@
           <img class="trophy" *ngIf="i < 3" src="assets/trophy-icon.png">
         </button>
       </li>
-      <li *ngIf="heroes.length < MAX_HEROES">
+      <li *ngIf="heroNames.length < MAX_HEROES">
         <button type="button" (click)="onOpenAddPanel()">
           <span class="badge" style="background-color: #a3a3a3;font-weight: bold;">+</span>
           <span class="name">ADD HERO!</span>
@@ -22,9 +22,9 @@
     </ul>
   </div>
   <div style="width: 50%;margin:20px;margin-top: 15px;">
-    <app-hero-detail *ngIf="selectedHero && !isEditPanelOpen && !isDrawPanelOpen" [hero]="selectedHero" [rank]="heroes.indexOf(selectedHero)+1" (openEdit)="onOpenEditPanel()" (delete)="onDeleteHero()"></app-hero-detail>
+    <app-hero-detail *ngIf="selectedHeroId != undefined && !isEditPanelOpen && !isDrawPanelOpen" [heroId]="selectedHeroId" (openEdit)="onOpenEditPanel()" (delete)="onDeleteHero()" (rankUp)="onRankChange()" (rankDown)="onRankChange()"></app-hero-detail>
   </div>
 </div>
 <app-add-hero-panel *ngIf="isAddPanelOpen" (close)="onCloseAddPanel()" (add)="onAddHero()" />
-<app-edit-hero-panel *ngIf="isEditPanelOpen && !isDrawPanelOpen && selectedHero" [hero]="selectedHero" (close)="onCloseEditPanel()" (upload)="onUploadHeroImage($event)" (draw)="onOpenDrawPanel()" />
-<app-draw-hero-panel *ngIf="isDrawPanelOpen && selectedHero" [hero]="selectedHero" (close)="onCloseDrawPanel()" />
+<app-edit-hero-panel *ngIf="isEditPanelOpen && !isDrawPanelOpen && selectedHeroId != undefined" [heroId]="selectedHeroId" (close)="onCloseEditPanel()" (openDraw)="onOpenDrawPanel()" />
+<app-draw-hero-panel *ngIf="isDrawPanelOpen && selectedHeroId != undefined" [heroId]="selectedHeroId" (close)="onCloseDrawPanel()" />

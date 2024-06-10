@@ -4,6 +4,7 @@ import { NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Color } from '../color';
 import { MessageService } from '../message.service';
 import { MessageType } from '../message';
+import { HeroService } from '../hero.service';
 
 @Component({
   standalone: true,
@@ -14,8 +15,10 @@ import { MessageType } from '../message';
 })
 export class DrawHeroPanelComponent implements OnInit {
   //@Input() close!: () => void;
-  @Input() hero!: Hero;
+  @Input() heroId!: number;
   @Output() close = new EventEmitter();
+
+  heroName: string = "";
 
   // drawing variables
   isMouseHeld: boolean = false; // whether the mouse is held down or not
@@ -56,11 +59,18 @@ export class DrawHeroPanelComponent implements OnInit {
   ];
   COLORS_PER_ROW = 10;
 
-  constructor (private messageService: MessageService) {}
+  constructor (private heroService:HeroService, private messageService: MessageService) {}
 
   ngOnInit(): void {
+    this.getName();
     this.loadDrawing();
     this.generateColors();
+  }
+
+  getName() {
+    this.heroService.getName(this.heroId).subscribe(name => {
+      this.heroName = name ?? "";
+    });
   }
 
   onMouseDown(event: MouseEvent) { // function called on start of press
@@ -187,8 +197,7 @@ export class DrawHeroPanelComponent implements OnInit {
     canvas.toBlob(blob => {
       if (blob) {
         // assign the blob to hero.image
-        this.hero.image = blob;
-        this.hero.isImageDrawn = true;
+        this.heroService.updateImage(this.heroId, blob, true);
         this.messageService.add("DrawingComponent: Drawing saved successfully");
         //console.log('Blob assigned to hero.image:', blob.text());
       } else {
@@ -200,15 +209,17 @@ export class DrawHeroPanelComponent implements OnInit {
   loadDrawing() { // function called when entering drawing panel (loads hero image if exists)
     let canvas = document.getElementById('canvas') as HTMLCanvasElement;
     let ctx = canvas.getContext('2d');
-    if (!this.hero || !this.hero.image || !this.hero.isImageDrawn) return; // only allow to load image if it's drawn
+    this.heroService.getImage(this.heroId).subscribe(image => {
+      if (!image || !image.isImageDrawn) return; // only allow to load image if it's drawn
 
-    // convert blob to image and show it on the canvas
-    var img = new Image();
-    img.src = URL.createObjectURL(this.hero.image);
-    img.onload = function() {
-      if (ctx)
-        ctx.drawImage(img, 0, 0);
-    }
+      // convert blob to image and show it on the canvas
+      var img = new Image();
+      img.src = URL.createObjectURL(image.imageBlob);
+      img.onload = function() {
+        if (ctx)
+          ctx.drawImage(img, 0, 0);
+      }
+    })
   }
 
   generateColors() { // generates matrix for color palette
