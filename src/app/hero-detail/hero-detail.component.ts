@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgFor, NgIf, UpperCasePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {Hero} from '../hero';
 import { HeroService } from '../hero.service';
 
 @Component({ // this component is responsible for handling the hero detail panel
@@ -11,8 +10,19 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./hero-detail.component.scss'],
   imports: [FormsModule, NgIf, NgFor, UpperCasePipe],
 })
-export class HeroDetailComponent implements OnChanges {
-  @Input() heroId!: number; // hero that's being viewed
+export class HeroDetailComponent {
+  private _heroId!: number; // hero that's being viewed
+
+  @Input()
+  set heroId(id: number) {
+    this._heroId = id;
+    this.getHeroData();
+  }
+
+  get heroId(): number {
+    return this._heroId;
+  }
+
   @Output() openEdit = new EventEmitter;
   @Output() delete = new EventEmitter;
   @Output() rankUp = new EventEmitter;
@@ -25,7 +35,7 @@ export class HeroDetailComponent implements OnChanges {
 
   constructor(private heroService: HeroService) {}
 
-  ngOnChanges(changes: SimpleChanges): void { // whenever the hero detail needs to render a hero it regenerates the image & rank
+  getHeroData() {
     this.getName();
     this.getAbilities();
     this.getRank();

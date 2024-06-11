@@ -50,6 +50,22 @@ export class HeroesComponent implements OnInit {
   }
   ngOnInit(): void { // calls the function to get the hero array on init
     this.getHeroes();
+    this.checkForClickedMessage();
+  }
+
+  checkForClickedMessage() {
+    this.messageService.getClickedMessage().subscribe(text => {
+      const strIndex = text.indexOf("id=");
+      if (strIndex === -1) return;
+      let spaceIndex = text.indexOf(' ', strIndex);
+      if (spaceIndex === -1)
+        spaceIndex = text.length;
+      const id = Number(text.substring(strIndex + 3, spaceIndex));
+      if (this.heroNames.some(x => x.id === id))
+        this.selectedHeroId = Number(id);
+      else
+        alert(`Hero id=${id} was deleted!`);
+    })
   }
 
   onSelect(heroId: number): void { // function called when pressing hero in list (selects hero to show detail)

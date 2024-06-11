@@ -8,12 +8,13 @@
     </div>
     <button type="button" class="toggle-button" (click)="togglePanel()">{{isOpen ? '▼' : '▲'}}</button>
     <div class="messages-list">
-        <div *ngFor='let message of messageService.messages.reverse(); let i = index' class="message"
+        <button *ngFor='let message of messageService.messages.reverse(); let i = index' class="message"
         [class.even]="(messageService.messages.length - i) % 2 == 0"
         [class.odd]="(messageService.messages.length - i) % 2 == 1"
+        (click)="messageService.setClickedMessage(message.text)"
         >
-        <span [style.color]="MESSAGE_COLORS[message.type]">{{message.text}}</span>
-        <span>({{(messageService.messages.length - i)}}</span>
-    </div>
+            <span [style.color]="MESSAGE_COLORS[message.type]">{{message.text}}</span>
+            <span>({{(messageService.messages.length - i)}}</span>
+        </button>
     </div>
 </div>
