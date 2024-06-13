@@ -73,17 +73,24 @@ export class HeroDetailComponent {
   }
 
   deleteHero() {
-    this.heroService.deleteHero(this.heroId)
-    this.delete.emit();
+    this.heroService.deleteHero(this.heroId).subscribe(() => {
+      this.delete.emit();
+    })
   }
 
   onRankUp = () => {
-    this.heroService.changeHeroIndex(this.heroId, -1);
-    this.rankUp.emit();
+    this.heroService.changeHeroIndex(this.heroId, -1).subscribe(index => {
+      if (index != undefined)
+        this.rank = index + 1;
+      this.rankUp.emit();
+    });
   }
 
   onRankDown = () => {
-    this.heroService.changeHeroIndex(this.heroId, 1);
-    this.rankDown.emit();
+    this.heroService.changeHeroIndex(this.heroId, 1).subscribe(index => {
+      if (index != undefined)
+        this.rank = index + 1;
+      this.rankDown.emit();
+    });
   }
 }

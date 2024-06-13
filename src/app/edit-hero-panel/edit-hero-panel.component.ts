@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MessageService } from '../message.service';
 import { MessageType } from '../message';
 import { HeroService } from '../hero.service';
+import { Observable } from 'rxjs';
 
 @Component({ // this component is responsible for handling the 'edit hero' form
   standalone: true,
@@ -73,28 +74,26 @@ export class EditHeroPanelComponent implements OnInit {
       const arrayBuffer = reader.result as ArrayBuffer;
       if (arrayBuffer && this.heroId) {
         const blob = new Blob([arrayBuffer], { type: file.type }); // create a blob
-        this.heroService.updateImage(this.heroId, blob, false);
-        this.messageService.add("EditHeroComponent: Image uploaded successfully");
+        this.heroService.updateImage(this.heroId, blob, false).subscribe(() => {
+          this.messageService.add("EditHeroComponent: Image uploaded successfully");
+          this.upload.emit(file);
+        });
       }
       else {
         this.messageService.add("EditHeroComponent: Error reading image file", MessageType.Error);
       }
     };
-
-    this.upload.emit(file);
-  }
-
-  saveChanges() {
-    this.heroService.updateHero(this.heroId, this.heroName, this.heroAbilities);
   }
 
   onClose() {
-    this.saveChanges();
-    this.close.emit();
+    this.heroService.updateHero(this.heroId, this.heroName, this.heroAbilities).subscribe(() => {
+      this.close.emit();
+    });
   }
 
   onOpenDraw() {
-    this.saveChanges();
-    this.openDraw.emit();
+    this.heroService.updateHero(this.heroId, this.heroName, this.heroAbilities).subscribe(() => {
+      this.openDraw.emit();
+    });
   }
 }

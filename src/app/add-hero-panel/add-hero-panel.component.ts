@@ -15,7 +15,7 @@ export const MAX_ABILITIES: number = 3;
 })
 export class AddHeroPanelComponent {
   @Output() close = new EventEmitter();
-  @Output() add = new EventEmitter(); // function called when pressing 'add hero' button
+  @Output() add = new EventEmitter<number>(); // function called when pressing 'add hero' button
 
   // values of hero
   heroName: string = "";
@@ -38,7 +38,8 @@ export class AddHeroPanelComponent {
   }
 
   addHero() {
-    this.heroService.addHero(this.heroName, this.heroAbilities);
-    this.add.emit();
+    this.heroService.addHero(this.heroName, this.heroAbilities).subscribe(id => {
+      this.add.emit(id);
+    });
   }
 }

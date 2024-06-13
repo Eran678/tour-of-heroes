@@ -200,7 +200,8 @@ export class DrawHeroPanelComponent implements OnInit {
         this.heroService.updateImage(this.heroId, blob, true);
         this.messageService.add("DrawingComponent: Drawing saved successfully");
         //console.log('Blob assigned to hero.image:', blob.text());
-      } else {
+      }
+      else {
         this.messageService.add("DrawingComponent: Failed to create blob", MessageType.Error);
       }
     }, 'image/png', 1);
