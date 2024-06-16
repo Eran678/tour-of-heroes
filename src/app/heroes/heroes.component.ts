@@ -46,7 +46,7 @@ export class HeroesComponent implements OnInit {
   constructor(private heroService: HeroService, private messageService: MessageService, private http: HttpClient) { }
   getHeroes(): void { // gets the hero array asynchronously from the service
     this.heroService.getHeroNames()
-        .subscribe(heroNames => {this.heroNames = heroNames; console.log(heroNames);});
+        .subscribe(heroNames => this.heroNames = heroNames);
   }
   ngOnInit(): void { // calls the function to get the hero array on init
     this.getHeroes();
