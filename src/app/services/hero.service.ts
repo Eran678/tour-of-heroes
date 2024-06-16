@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, forkJoin } from 'rxjs';
-import { Hero } from './hero';
-import { HEROES } from './mock-heroes';
+import { Hero } from '../objects/hero';
+import { HEROES } from '../mock-heroes';
 import { MessageService } from './message.service';
-import { MessageType } from './message';
+import { MessageType } from '../objects/message';
 import { map } from 'rxjs';
 
 @Injectable({ // this service is responsible for handling the hero array & data
@@ -18,9 +18,9 @@ export class HeroService {
   }
 
   getHeroNames(): Observable<{id: number, name: string}[]> { // returns the hero array asynchronously
-    const heroes = of(HEROES.map(h => ({id: h.id, name: h.name})));
+    const heroes = this.getHeroes();
     this.messageService.add('HeroService: fetched heroes', MessageType.Info);
-    return heroes;
+    return heroes.pipe(map((heroes) => heroes.map((hero: Hero) => ({ id: hero.id, name: hero.name }))));
   }
 
   addHero(name: string, abilities: string[]): Observable<number> { // adds a hero to the hero array
@@ -47,7 +47,8 @@ export class HeroService {
   }
 
   private getMaxId(): Observable<number> {
-    const heroIds = of(HEROES.map(h => h.id));
+    const heroes = this.getHeroes();
+    const heroIds = heroes.pipe(map(heroes => heroes.map(hero => hero.id)));
     return heroIds.pipe( // after getting heroIds, take the max one (still in observable)
       map(ids => Math.max(...ids))
     );
@@ -117,12 +118,12 @@ export class HeroService {
   }
 
   private findHero(heroId: number): Observable<Hero | undefined> {
-    const hero = of(HEROES.find(hero => hero.id == heroId));
-    return hero;
+    const heroes = this.getHeroes();
+    return heroes.pipe(map(heroes => heroes.find(hero => hero.id == heroId)));
   }
 
   findHeroIndex(heroId: number): Observable<number | undefined> {
-    const index = of(HEROES.findIndex(hero => hero.id == heroId));
-    return index;
+    const heroes = this.getHeroes();
+    return heroes.pipe(map(heroes => heroes.findIndex(hero => hero.id == heroId)));
   }
 }

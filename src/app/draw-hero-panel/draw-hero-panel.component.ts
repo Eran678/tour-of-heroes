@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Hero } from '../hero';
+import { Hero } from '../objects/hero';
 import { NgFor, NgIf, UpperCasePipe } from '@angular/common';
-import { Color } from '../color';
-import { MessageService } from '../message.service';
-import { MessageType } from '../message';
-import { HeroService } from '../hero.service';
+import { Color } from '../objects/color';
+import { MessageService } from '../services/message.service';
+import { MessageType } from '../objects/message';
+import { HeroService } from '../services/hero.service';
 
 @Component({
   standalone: true,
@@ -14,7 +14,6 @@ import { HeroService } from '../hero.service';
   imports: [UpperCasePipe, NgFor, NgIf]
 })
 export class DrawHeroPanelComponent implements OnInit {
-  //@Input() close!: () => void;
   @Input() heroId!: number;
   @Output() close = new EventEmitter();
 

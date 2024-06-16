@@ -1,12 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Hero } from '../hero';
+import { Hero } from '../objects/hero';
 import { MAX_ABILITIES } from '../add-hero-panel/add-hero-panel.component';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MessageService } from '../message.service';
-import { MessageType } from '../message';
-import { HeroService } from '../hero.service';
-import { Observable } from 'rxjs';
+import { MessageService } from '../services/message.service';
+import { MessageType } from '../objects/message';
+import { HeroService } from '../services/hero.service';
 
 @Component({ // this component is responsible for handling the 'edit hero' form
   standalone: true,

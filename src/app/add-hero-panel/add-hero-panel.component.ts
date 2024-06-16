@@ -1,8 +1,8 @@
 import { NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
+import { Hero } from '../objects/hero';
+import { HeroService } from '../services/hero.service';
 
 export const MAX_ABILITIES: number = 3;
 

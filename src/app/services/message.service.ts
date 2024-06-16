@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Message, MessageType } from './message';
+import { Message, MessageType } from '../objects/message';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ // this service is responsible for handling the log messages
@@ -18,7 +18,7 @@ export class MessageService {
   }
 
   getClickedMessage(): Observable<string> {
-    return this.clickedMessage;
+    return this.clickedMessage.asObservable();
   }
 
   setClickedMessage(text: string) {

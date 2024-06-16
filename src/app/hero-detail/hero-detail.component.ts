@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgFor, NgIf, UpperCasePipe} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import { HeroService } from '../hero.service';
+import { HeroService } from '../services/hero.service';
 
 @Component({ // this component is responsible for handling the hero detail panel
   standalone: true,
@@ -15,6 +15,7 @@ export class HeroDetailComponent {
 
   @Input()
   set heroId(id: number) {
+    if (this._heroId == id) return;
     this._heroId = id;
     this.getHeroData();
   }
@@ -78,7 +79,7 @@ export class HeroDetailComponent {
     })
   }
 
-  onRankUp = () => {
+  onRankUp() {
     this.heroService.changeHeroIndex(this.heroId, -1).subscribe(index => {
       if (index != undefined)
         this.rank = index + 1;
@@ -86,7 +87,7 @@ export class HeroDetailComponent {
     });
   }
 
-  onRankDown = () => {
+  onRankDown() {
     this.heroService.changeHeroIndex(this.heroId, 1).subscribe(index => {
       if (index != undefined)
         this.rank = index + 1;

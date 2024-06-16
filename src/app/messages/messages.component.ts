@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MessageService } from '../message.service';
-import { MessageType } from '../message';
+import { MessageService } from '../services/message.service';
+import { MessageType } from '../objects/message';
 
 @Component({ // this component is responsible for handling the messages panel
   selector: 'app-messages',
