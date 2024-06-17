@@ -1,0 +1,54 @@
+.rank {
+    position: relative;margin: 25px;
+
+    img {
+        height: 100px;
+    }
+
+    span {
+        position: absolute;
+        left:50%;
+        font-size:23px;
+        top:23px;
+        transform: translate(-50%);
+    }
+
+    /* general text colors */
+    &.gold {
+        span { color: #d6bd2cec; }
+        img { background-color: #d6bd2cec; }
+    }
+    &.silver {
+        span { color: #a3a3a3; }
+        img { background-color: #a3a3a3; }
+    }
+    &.bronze {
+        span { color: #6e462c; }
+        img { background-color: #6e462c; }
+    }
+    &.regular {
+        span { color: #405061; }
+        img { background-color: #405061; }
+    }
+}
+
+div.hero-details {
+    margin: 10px;
+    line-height: 2em;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.change-rank {
+    margin: 25px;
+    margin-left: 0px;
+}
+
+.hero-image {
+    max-height: 30vh;
+    max-width: 50%;
+}
+
+.gray {
+    color: gray;
+}

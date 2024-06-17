@@ -1,9 +1,9 @@
 <div>
     <button type="button" class="popup-bg"></button>
-    <div class="popup" style="text-align: center;">
+    <div class="popup align-center">
         <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
         <br /><br />
-        <h2 style="margin-bottom: 0px;">Draw {{heroName | uppercase}}</h2>
+        <h2 class="no-bottom-margin">Draw {{heroName | uppercase}}</h2>
         <hr />
         <div class="tool-menu">
             <button type="button" [class.selected]="selectedTool == Tool.Pencil" (click)="selectTool(Tool.Pencil)" title="Pencil">
@@ -21,7 +21,7 @@
                 <img src="assets/trash-icon.png"/>
             </button>
             <span>|</span>
-            <button type="button" style="width: 50px;font-weight: bold;" [disabled]="isSaveDisabled" (click)="saveDrawing()">Save</button>
+            <button type="button" class="button text" [disabled]="isSaveDisabled" (click)="saveDrawing()">Save</button>
         </div>
         <hr />
         <canvas id="canvas" class="canvas" width="{{IMAGE_SIZE}}" height="{{IMAGE_SIZE}}" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)">Your browser does not support the HTML canvas tag.</canvas>

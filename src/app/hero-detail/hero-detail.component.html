@@ -1,10 +1,10 @@
 <div class="bland-popup">
   <br/>
-  <h2 style="line-height: 0px;text-align: center;">{{heroName | uppercase}} Details</h2>
+  <h2 class="no-height-margin align-center">{{heroName | uppercase}} Details</h2>
   <hr />
-  <div style="margin: 10px; line-height: 2em;display: flex;justify-content: space-between;">
-    <div style="flex:1;">
-      <span class="bold alignRight">Id: </span><span>{{heroId}}</span><br/>
+  <div class="hero-details">
+    <div class="full-width">
+      <span class="bold">Id: </span><span>{{heroId}}</span><br/>
       <span class="bold">Hero Name: </span><span>{{heroName}}</span><br/>
       <span class="bold">Abilities:</span>
       <ul>
@@ -13,27 +13,27 @@
         </li>
       </ul>
     </div>
-    <div *ngIf="rank" style="position: relative;margin: 25px;" class="rank"
+    <div *ngIf="rank" class="rank"
     [class.gold]="rank == 1"
     [class.silver]="rank == 2"
     [class.bronze]="rank == 3"
     [class.regular]="rank > 3">
-      <img src="assets/rank-icon.png" class="circle" style="height: 100px" />
-      <span class="bold" style="position: absolute;left:50%;font-size:23px;top:23px;transform: translate(-50%);">{{rank}}</span>
+      <img src="assets/rank-icon.png" class="circle" />
+      <span class="bold">{{rank}}</span>
     </div>
-    <div style="margin: 25px;margin-left: 0px;">
+    <div class="change-rank">
       <button type="button" class="button circle" (click)="onRankUp()">+</button><br />
       <button type="button" class="button circle" (click)="onRankDown()">-</button>
     </div>
   </div>
   <hr />
-  <div style="text-align: center;">
-    <h2 style="line-height: 0px;margin-bottom:0px;">What do they look like?</h2><br/>
-    <img *ngIf="image" src="{{image}}" style="max-height: 30vh;max-width: 50%;"><br/>
-    <h4 *ngIf="!image" style="color: gray;line-height: 0px;margin-top:0px;">(no image currently saved, go to 'Edit Hero' to add one)</h4>
+  <div class="align-center">
+    <h2 class="no-bottom-margin no-height-margin">What do they look like?</h2><br/>
+    <img *ngIf="image" src="{{image}}" class="hero-image"><br/>
+    <h4 *ngIf="!image" class="no-top-margin no-height-margin gray">(no image currently saved, go to 'Edit Hero' to add one)</h4>
   </div>
   <hr />
-  <div style="display: flex;justify-content: space-between;">
+  <div class="space-items">
     <button type="button" class="button" (click)="this.openEdit.emit()">Edit Hero</button>
     <button type="button" class="button square" (click)="deleteHero()" title="Delete hero">
       <img src="assets/trash-icon.png" />
