@@ -32,23 +32,54 @@
     }
 }
 
+.title {
+    margin-bottom: 0px;
+    text-align: center;
+}
+
 div.hero-details {
     margin: 10px;
     line-height: 2em;
     display: flex;
     justify-content: space-between;
+
+    .details-div {
+        width: 100%;
+
+        .ability {
+            align-self: center;
+            flex: 1; /* Take up remaining space */
+            text-align: left;
+        }
+    }
+
+    div.change-rank {
+        margin: 25px;
+        margin-left: 0px;
+    }
 }
 
-div.change-rank {
-    margin: 25px;
-    margin-left: 0px;
+.image-div {
+    text-align: center;
+
+    .image-subtitle {
+        margin-bottom: 0px;
+        line-height: 0px;
+    }
+
+    .hero-image {
+        max-height: 30vh;
+        max-width: 50%;
+    }
+
+    .no-image-text {
+        margin-top: 0px;
+        line-height: 0px;
+        color: gray;
+    }
 }
 
-.hero-image {
-    max-height: 30vh;
-    max-width: 50%;
-}
-
-.gray {
-    color: gray;
+.bottom-buttons-div {
+    display: flex;
+    justify-content: space-between;
 }

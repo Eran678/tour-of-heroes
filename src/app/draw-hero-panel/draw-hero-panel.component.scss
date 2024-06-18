@@ -1,3 +1,15 @@
+.popup {
+    text-align: center;
+
+    .close-button {
+        float:right;
+    }
+
+    .title {
+        margin-bottom: 0px;
+    }
+}
+
 .canvas {
     width: 500px;
     height: 500px;
@@ -21,6 +33,7 @@
     &.text {
         width: 60px;
         font-weight: bold;
+        box-shadow: none;
 
         &:disabled {
             color: #6b6b6b;

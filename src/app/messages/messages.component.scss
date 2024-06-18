@@ -25,6 +25,10 @@ h3 {
 .clear-button {
     background-color: transparent;
     border: none;
+
+    img {
+        height: 100%;
+    }
 }
 
 .toggle-button {

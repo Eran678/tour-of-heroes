@@ -1,8 +1,36 @@
 div.popup {
     width: 40em;
     height: 34em;
-}
+    text-align: center;
 
-ul {
-    height: 150px;
+    .close-button {
+        float:right;
+    }
+
+    .title {
+        margin-bottom: 0px;
+    }
+
+    .name-subtitle {
+        margin-bottom: 0px;
+    }
+
+    .image-subtitle {
+        margin-bottom: 0px;
+        line-height: 0px;
+    }
+
+    .file-upload {
+        display: none;
+    }
+
+    .abilities-subtitle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    ul {
+        height: 150px;
+    }
 }

@@ -1,9 +1,9 @@
 <div>
     <button type="button" class="popup-bg"></button>
-    <div class="popup align-center">
-        <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
+    <div class="popup">
+        <button type="button" class="button circle close-button" (click)="this.close.emit()">x</button>
         <br /><br />
-        <h2 class="no-bottom-margin">Draw {{heroName | uppercase}}</h2>
+        <h2 class="title">Draw {{heroName | uppercase}}</h2>
         <hr />
         <div class="tool-menu">
             <button type="button" [class.selected]="selectedTool == Tool.Pencil" (click)="selectTool(Tool.Pencil)" title="Pencil">

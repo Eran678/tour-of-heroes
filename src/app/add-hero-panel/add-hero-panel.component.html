@@ -1,13 +1,13 @@
 <div>
     <button type="button" class="popup-bg" (click)="this.close.emit()"></button>
-    <div class="popup align-center">
-        <button type="button" class="button circle align-right" (click)="this.close.emit()">x</button>
+    <div class="popup">
+        <button type="button" class="button circle close-button" (click)="this.close.emit()">x</button>
         <br /><br />
-        <h2 class="no-bottom-margin">Add Hero</h2>
+        <h2 class="title">Add Hero</h2>
         <hr />
-        <h3 for="hero-name" class="no-bottom-margin">Name:</h3>
+        <h3 for="hero-name" class="name-subtitle">Name:</h3>
         <input id="hero-name" [(ngModel)]="heroName" autocomplete="off" placeholder="Name" maxlength="15"><br/>
-        <div class="align-items-row">
+        <div class="abilities-subtitle">
             <h3>Abilities:</h3>
             <button type="button" class="button circle" (click)="addAbility()">+</button>
         </div>
