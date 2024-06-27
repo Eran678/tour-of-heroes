@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, forkJoin, switchMap, EMPTY, catchError } from 'rxjs';
+import { Observable, switchMap, EMPTY, catchError, forkJoin } from 'rxjs';
 import { MessageService } from './message.service';
 import { MessageType } from '../objects/message';
 import { map } from 'rxjs';
@@ -14,7 +14,7 @@ export class HeroService {
 
   constructor(private messageService: MessageService, private http: HttpClient) { }
 
-  getHeroNames(): Observable<{id: number, name: string}[]> { // returns the hero array asynchronously
+  private getHeroNames(): Observable<{id: number, name: string}[]> { // returns the hero array asynchronously
     const url = `${this.baseUrl}/names`;
 
     return this.http.get<Map<number, string>>(url).pipe(
@@ -23,6 +23,18 @@ export class HeroService {
         return Object.entries(data).map(([id, name]) => ({ id: parseInt(id), name }));
       })
     );
+  }
+
+  getHeroes(): Observable<{id:number, name: string}[]> {
+    return forkJoin([this.getHeroNames(), this.getRanks()]).pipe(map(([heroNames, ranks]) => {
+      const heroes:{id:number, name: string}[] = []
+      ranks.forEach(heroId => {
+        let hero = heroNames.find(x => x.id === heroId)
+        if (hero)
+          heroes.push(hero)
+      })
+      return heroes;
+      }))
   }
 
   addHero(name: string, abilities: string[]): Observable<{id: number, name: string}> { // adds a hero to the hero array
@@ -53,11 +65,7 @@ export class HeroService {
   getAbilities(heroId: number): Observable<string[] | undefined> {
     const url = `${this.baseUrl}/${heroId}/abilities`;
 
-    return this.http.get<string[] | undefined>(url).pipe(
-      map(data => {
-        return data
-      })
-    );
+    return this.http.get<string[] | undefined>(url);
   }
 
   getImage(heroId: number): Observable<{ imageBlob: Blob, isImageDrawn: boolean } | undefined> {
@@ -110,5 +118,24 @@ export class HeroService {
       // Start reading the Blob as Base64 string
       reader.readAsDataURL(imageBlob);
     });
+  }
+
+  //ranks
+  private getRanks(): Observable<number[]> {
+    const url = `${this.baseUrl}/ranks`;
+    return this.http.get<number[]>(url).pipe(
+      map(data => {
+        this.messageService.add('HeroService: fetched ranks', MessageType.Info);
+        return data;
+      })
+    )
+  }
+
+  updateRanks(ranks: number[]): Observable<void> {
+    const url = `${this.baseUrl}/updateRanks`;
+    return this.http.post<void>(url, {ranks}).pipe(
+      map(() => {
+        this.messageService.add('HeroService: updated ranks', MessageType.Info);
+      }));
   }
 }

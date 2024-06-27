@@ -2,7 +2,7 @@
 <div class="heroes-div">
   <div class="left-div">
     <ul class="heroes grid">
-      <li *ngFor="let hero of heroNames; let i = index">
+      <li *ngFor="let hero of heroes; let i = index">
         <button [class.selected]="hero.id === selectedHeroId" type="button" (click)="onSelect(hero.id)"
           [class.gold]="i == 0"
           [class.silver]="i == 1"
@@ -13,7 +13,7 @@
           <img class="trophy" *ngIf="i < 3" src="assets/trophy-icon.png">
         </button>
       </li>
-      <li *ngIf="heroNames.length < MAX_HEROES">
+      <li *ngIf="heroes.length < MAX_HEROES">
         <button type="button" class="add-hero" (click)="onOpenAddPanel()">
           <span class="badge">+</span>
           <span class="name">ADD HERO!</span>
