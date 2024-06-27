@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Hero } from '../objects/hero';
 import { NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Color } from '../objects/color';
 import { MessageService } from '../services/message.service';
@@ -15,9 +14,8 @@ import { HeroService } from '../services/hero.service';
 })
 export class DrawHeroPanelComponent implements OnInit {
   @Input() heroId!: number;
+  @Input() heroName!: string;
   @Output() close = new EventEmitter();
-
-  heroName: string = "";
 
   // drawing variables
   isMouseHeld: boolean = false; // whether the mouse is held down or not
@@ -61,15 +59,8 @@ export class DrawHeroPanelComponent implements OnInit {
   constructor (private heroService:HeroService, private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.getName();
     this.loadDrawing();
     this.generateColors();
-  }
-
-  getName() {
-    this.heroService.getName(this.heroId).subscribe(name => {
-      this.heroName = name ?? "";
-    });
   }
 
   onMouseDown(event: MouseEvent) { // function called on start of press

@@ -19,48 +19,30 @@ export class HeroDetailComponent {
     this._heroId = id;
     this.getHeroData();
   }
-
   get heroId(): number {
     return this._heroId;
   }
+  @Input() heroName!: string;
+  @Input() rank!: number;
 
   @Output() openEdit = new EventEmitter;
   @Output() delete = new EventEmitter;
   @Output() rankUp = new EventEmitter;
   @Output() rankDown = new EventEmitter;
   
-  heroName?: string;
   heroAbilities?: string[];
-  rank?: number;
   image?: string;
 
   constructor(private heroService: HeroService) {}
 
   getHeroData() {
-    this.getName();
     this.getAbilities();
-    this.getRank();
     this.getImage();
-  }
-
-  getName() {
-    this.heroService.getName(this.heroId).subscribe(name => {
-      this.heroName = name ?? "";
-    });
   }
 
   getAbilities() {
     this.heroService.getAbilities(this.heroId).subscribe(abilities => {
       this.heroAbilities = abilities ?? [];
-    });
-  }
-
-  getRank() {
-    this.heroService.findHeroIndex(this.heroId).subscribe(index => {
-      if (index != undefined)
-        this.rank = index + 1;
-      else
-        this.rank = undefined;
     });
   }
 
@@ -77,21 +59,5 @@ export class HeroDetailComponent {
     this.heroService.deleteHero(this.heroId).subscribe(() => {
       this.delete.emit();
     })
-  }
-
-  onRankUp() {
-    this.heroService.changeHeroIndex(this.heroId, -1).subscribe(index => {
-      if (index != undefined)
-        this.rank = index + 1;
-      this.rankUp.emit();
-    });
-  }
-
-  onRankDown() {
-    this.heroService.changeHeroIndex(this.heroId, 1).subscribe(index => {
-      if (index != undefined)
-        this.rank = index + 1;
-      this.rankDown.emit();
-    });
   }
 }

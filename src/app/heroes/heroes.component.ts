@@ -7,14 +7,11 @@ import {
 import {FormsModule} from '@angular/forms';
 import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 
-import {Hero} from '../objects/hero';
 import { HeroService } from '../services/hero.service';
 import { AddHeroPanelComponent } from '../add-hero-panel/add-hero-panel.component';
 import { EditHeroPanelComponent } from '../edit-hero-panel/edit-hero-panel.component';
 import { MessageService } from '../services/message.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of, map } from 'rxjs';
-import { MessageType } from '../objects/message';
 import { DrawHeroPanelComponent } from '../draw-hero-panel/draw-hero-panel.component';
 
 @Component({ // this component is responsible for handling the heroes list
@@ -35,7 +32,7 @@ import { DrawHeroPanelComponent } from '../draw-hero-panel/draw-hero-panel.compo
 })
 
 export class HeroesComponent implements OnInit {
-  heroNames: {id: number, name: string}[] = []; // the array of heroes shown in the list
+  heroNames: {id: number, name: string}[] = []
   selectedHeroId?: number; // current hero that's viewed in hero detail
   isAddPanelOpen: boolean = false; // whether the 'add hero' panel is open or not
   isEditPanelOpen: boolean = false; // whether the 'edit hero' panel is open or not
@@ -46,11 +43,30 @@ export class HeroesComponent implements OnInit {
   constructor(private heroService: HeroService, private messageService: MessageService, private http: HttpClient) { }
   getHeroes(): void { // gets the hero array asynchronously from the service
     this.heroService.getHeroNames()
-        .subscribe(heroNames => this.heroNames = heroNames);
+        .subscribe(heroNames => {
+          this.heroNames = heroNames
+        });
   }
   ngOnInit(): void { // calls the function to get the hero array on init
-    this.getHeroes();
+    let sessionSave: string | null = sessionStorage.getItem("heroNames")
+    if (sessionSave != null) // if already saved then use session
+      this.heroNames = JSON.parse(sessionSave)
+    else
+      this.getHeroes(); // take from database if not loaded before to session
+
     this.checkForClickedMessage();
+  }
+  
+  getSelectedHeroName() {
+    return this.heroNames.find(x => x.id === this.selectedHeroId)?.name ?? "";
+  }
+
+  getSelectedHeroIndex() {
+    return this.heroNames.findIndex(x => x.id === this.selectedHeroId);
+  }
+
+  getSelectedHeroRank() {
+    return this.getSelectedHeroIndex() + 1
   }
 
   checkForClickedMessage() {
@@ -72,8 +88,20 @@ export class HeroesComponent implements OnInit {
     this.selectedHeroId = heroId;
     this.messageService.add(`HeroesComponent: Selected hero id=${heroId}`);
   }
-  onRankChange() {
-    this.getHeroes(); // update hero list
+
+  onRankUp() {
+    let index = this.getSelectedHeroIndex();
+    if (index === 0) return;
+    let selectedHero = this.heroNames.splice(index, 1)[0];
+    this.heroNames.splice(index - 1, 0, selectedHero)
+    this.saveHeroNames();
+  }
+  onRankDown() {
+    let index = this.getSelectedHeroIndex();
+    if (index >= this.heroNames.length - 1) return;
+    let selectedHero = this.heroNames.splice(index, 1)[0];
+    this.heroNames.splice(index + 1, 0, selectedHero)
+    this.saveHeroNames();
   }
 
   onOpenAddPanel(): void { // function called when pressing 'add hero' button (opens 'add hero' panel)
@@ -85,25 +113,34 @@ export class HeroesComponent implements OnInit {
   onOpenEditPanel(){ // function called when pressing 'edit hero' button (opens 'edit hero' panel)
     this.isEditPanelOpen = true;
   }
-  onCloseEditPanel() { // function called when pressing 'x' button / background in 'edit panel' (closes 'edit hero' panel)
+  onCloseEditPanel(name: string) { // function called when pressing 'x' button / background in 'edit panel' (closes 'edit hero' panel)
     this.isEditPanelOpen = false;
-    this.getHeroes(); // update hero list
+    this.heroNames[this.getSelectedHeroIndex()].name = name;
+    this.saveHeroNames();
   }
 
-  onAddHero = (id: number) => { // function called when pressing 'add hero!' button in 'add panel' (adds new hero to the list)
+  onAddHero = (heroInfo: {id: number, name: string}) => { // function called when pressing 'add hero!' button in 'add panel' (adds new hero to the list)
     this.isAddPanelOpen = false;
-    this.getHeroes(); // update hero list
+    this.heroNames.push({id: heroInfo.id, name: heroInfo.name })
+    this.saveHeroNames();
   }
 
   onDeleteHero() { // function called when pressing trash button in 'hero detail' (deletes hero from the list)
+    this.heroNames.splice(this.getSelectedHeroIndex(), 1)
     this.selectedHeroId = undefined;
-    this.getHeroes(); // update hero list
+    this.saveHeroNames();
   }
 
-  onOpenDrawPanel() { // function called when pressing 'draw' button in 'edit panel' (opens drawing panel)
+  onOpenDrawPanel(name: string) { // function called when pressing 'draw' button in 'edit panel' (opens drawing panel)
     this.isDrawPanelOpen = true;
+    this.heroNames[this.getSelectedHeroIndex()].name = name;
+    this.saveHeroNames();
   }
   onCloseDrawPanel() { // function called when pressing 'x' button in drawing panel (closes drawing panel)
     this.isDrawPanelOpen = false;
+  }
+
+  saveHeroNames() { // save list to session
+    sessionStorage.setItem("heroNames", JSON.stringify(this.heroNames))
   }
 }

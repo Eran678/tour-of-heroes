@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Hero } from '../objects/hero';
 import { MAX_ABILITIES } from '../add-hero-panel/add-hero-panel.component';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,24 +15,17 @@ import { HeroService } from '../services/hero.service';
 })
 export class EditHeroPanelComponent implements OnInit {
   @Input() heroId!: number; // hero that's being edited
-  @Output() close = new EventEmitter();
+  @Input() heroName!: string;
+  @Output() close = new EventEmitter<string>();
   @Output() upload = new EventEmitter<File>();
-  @Output() openDraw = new EventEmitter();
+  @Output() openDraw = new EventEmitter<string>();
 
-  heroName: string = "";
   heroAbilities: string[] = [];
 
   constructor(private heroService: HeroService, private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.getName();
     this.getAbilities();
-  }
-
-  getName() {
-    this.heroService.getName(this.heroId).subscribe(name => {
-      this.heroName = name ?? "";
-    });
   }
 
   getAbilities() {
@@ -86,13 +78,13 @@ export class EditHeroPanelComponent implements OnInit {
 
   onClose() {
     this.heroService.updateHero(this.heroId, this.heroName, this.heroAbilities).subscribe(() => {
-      this.close.emit();
+      this.close.emit(this.heroName);
     });
   }
 
   onOpenDraw() {
     this.heroService.updateHero(this.heroId, this.heroName, this.heroAbilities).subscribe(() => {
-      this.openDraw.emit();
+      this.openDraw.emit(this.heroName);
     });
   }
 }

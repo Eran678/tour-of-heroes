@@ -1,7 +1,6 @@
 import { NgFor } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import { Hero } from '../objects/hero';
 import { HeroService } from '../services/hero.service';
 
 export const MAX_ABILITIES: number = 3;
@@ -15,7 +14,7 @@ export const MAX_ABILITIES: number = 3;
 })
 export class AddHeroPanelComponent {
   @Output() close = new EventEmitter();
-  @Output() add = new EventEmitter<number>(); // function called when pressing 'add hero' button
+  @Output() add = new EventEmitter<{id: number, name: string}>(); // function called when pressing 'add hero' button
 
   // values of hero
   heroName: string = "";
@@ -38,8 +37,8 @@ export class AddHeroPanelComponent {
   }
 
   addHero() {
-    this.heroService.addHero(this.heroName, this.heroAbilities).subscribe(id => {
-      this.add.emit(id);
+    this.heroService.addHero(this.heroName, this.heroAbilities).subscribe(heroInfo => {
+      this.add.emit(heroInfo);
     });
   }
 }

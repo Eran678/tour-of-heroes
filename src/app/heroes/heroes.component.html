@@ -22,9 +22,9 @@
     </ul>
   </div>
   <div class="right-div">
-    <app-hero-detail *ngIf="selectedHeroId != undefined && !isEditPanelOpen && !isDrawPanelOpen" [heroId]="selectedHeroId" (openEdit)="onOpenEditPanel()" (delete)="onDeleteHero()" (rankUp)="onRankChange()" (rankDown)="onRankChange()"></app-hero-detail>
+    <app-hero-detail *ngIf="selectedHeroId != undefined && !isEditPanelOpen && !isDrawPanelOpen" [heroId]="selectedHeroId" [heroName]="getSelectedHeroName()" [rank]="getSelectedHeroRank()" (openEdit)="onOpenEditPanel()" (delete)="onDeleteHero()" (rankUp)="onRankUp()" (rankDown)="onRankDown()"></app-hero-detail>
   </div>
 </div>
 <app-add-hero-panel *ngIf="isAddPanelOpen" (close)="onCloseAddPanel()" (add)="onAddHero($event)" />
-<app-edit-hero-panel *ngIf="isEditPanelOpen && !isDrawPanelOpen && selectedHeroId != undefined" [heroId]="selectedHeroId" (close)="onCloseEditPanel()" (openDraw)="onOpenDrawPanel()" />
-<app-draw-hero-panel *ngIf="isDrawPanelOpen && selectedHeroId != undefined" [heroId]="selectedHeroId" (close)="onCloseDrawPanel()" />
+<app-edit-hero-panel *ngIf="isEditPanelOpen && !isDrawPanelOpen && selectedHeroId != undefined" [heroId]="selectedHeroId" [heroName]="getSelectedHeroName()" (close)="onCloseEditPanel($event)" (openDraw)="onOpenDrawPanel($event)" />
+<app-draw-hero-panel *ngIf="isDrawPanelOpen && selectedHeroId != undefined" [heroId]="selectedHeroId" [heroName]="getSelectedHeroName()" (close)="onCloseDrawPanel()" />

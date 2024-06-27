@@ -22,8 +22,8 @@
       <span class="bold">{{rank}}</span>
     </div>
     <div class="change-rank">
-      <button type="button" class="button circle" (click)="onRankUp()">+</button><br />
-      <button type="button" class="button circle" (click)="onRankDown()">-</button>
+      <button type="button" class="button circle" (click)="this.rankUp.emit()">+</button><br />
+      <button type="button" class="button circle" (click)="this.rankDown.emit()">-</button>
     </div>
   </div>
   <hr />
